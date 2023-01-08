@@ -7,6 +7,7 @@ import pages.AmazonPage;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
+import java.net.URL;
 import java.util.Arrays;
 
 public class Test_02 {
@@ -23,19 +24,19 @@ public class Test_02 {
 
         Driver.getDriver().get("https://www.amazon.com/");
         SoftAssert softAssert= new SoftAssert();
-        String expectUrlKelime="amazon";
+        String expectUrlKelime="Ramazon";
         String actualUrl= Driver.getDriver().getCurrentUrl();
-        softAssert.assertTrue(actualUrl.contains(expectUrlKelime));
+        softAssert.assertTrue(actualUrl.contains(expectUrlKelime), "Url amazon içermiyor");
         AmazonPage amazonPage= new AmazonPage();
         amazonPage.amazonAramaKutusu.sendKeys("Nutella" + Keys.ENTER);
 
         String aramaSonucYazisi= amazonPage.aramaSonucuElementi.getText();
-        softAssert.assertTrue(aramaSonucYazisi.contains("Nutella"));
+        softAssert.assertTrue(aramaSonucYazisi.contains("Nutella"),"arama sonucları nutella icermiyor");
         amazonPage.amazonAramaKutusu.clear();
         amazonPage.amazonAramaKutusu.sendKeys("Java"+ Keys.ENTER);
 
 
-        ReusableMethods.bekle(10);
+        ReusableMethods.bekle(3);
         System.out.println(amazonPage.aramaSonucuElementi.getText());
 
         aramaSonucYazisi=amazonPage.aramaSonucuElementi.getText();
