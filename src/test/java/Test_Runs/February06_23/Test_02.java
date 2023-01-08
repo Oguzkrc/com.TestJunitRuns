@@ -1,19 +1,57 @@
 package Test_Runs.February06_23;
 
+import org.openqa.selenium.Keys;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import pages.AmazonPage;
+import utilities.Driver;
+import utilities.ReusableMethods;
+
+import java.util.Arrays;
+
 public class Test_02 {
 
-    //1. "http://zero.webappsecurity.com/" Adresine gidin
-    // 2. Sign in butonuna basin
-    // 3. Login kutusuna "username" yazin
-    // 4. Password kutusuna "password" yazin
-    // 5. Sign in tusuna basin
-    // 6. Online banking menusu icinde Pay Bills sayfasina gidin
-    // 7. "Purchase Foreign Currency" tusuna basin
-    // 8. "Currency" drop down menusunden Eurozone'u secin
-    // 9. soft assert kullanarak "Eurozone (euro)" secildigini test edin
-    // 10. soft assert kullanarak DropDown listesinin su secenekleri oldugunu test edin
-    // "Select One", "Australia (dollar)", "Canada (dollar)","Switzerland (franc)","China (yuan)",
-    // "Denmark (krone)","Eurozone (euro)","Great Britain (pound)","Hong Kong (dollar)","Japan (yen)",
-    // "Mexico (peso)","Norway (krone)","New Zealand (dollar)","Sweden (krona)","Singapore (dollar)","Thailand (baht)"
+    @Test
+    public void test01(){
+
+        // amazon anasayfaya gidin
+        // amazon anasayfaya gittiginizi dogrulayın
+        // Nutella aratin
+        // arama sonuclarinin nutella icerdigini dogrulayin
+        // Java aratin
+        // arama sonuclarinin 1000'den fazla oldugunu dogrulayin
+
+        Driver.getDriver().get("https://www.amazon.com/");
+        SoftAssert softAssert= new SoftAssert();
+        String expectUrlKelime="amazon";
+        String actualUrl= Driver.getDriver().getCurrentUrl();
+        softAssert.assertTrue(actualUrl.contains(expectUrlKelime));
+        AmazonPage amazonPage= new AmazonPage();
+        amazonPage.amazonAramaKutusu.sendKeys("Nutella" + Keys.ENTER);
+
+        String aramaSonucYazisi= amazonPage.aramaSonucuElementi.getText();
+        softAssert.assertTrue(aramaSonucYazisi.contains("Nutella"));
+        amazonPage.amazonAramaKutusu.clear();
+        amazonPage.amazonAramaKutusu.sendKeys("Java"+ Keys.ENTER);
+
+
+        ReusableMethods.bekle(10);
+        System.out.println(amazonPage.aramaSonucuElementi.getText());
+
+        aramaSonucYazisi=amazonPage.aramaSonucuElementi.getText();
+
+        String[] sonucArr= aramaSonucYazisi.split(" ");
+
+        String javaSonucSayisiStr= sonucArr[3];
+
+        javaSonucSayisiStr=javaSonucSayisiStr.replaceAll("\\W","");
+
+        int sonucSayisi= Integer.parseInt(javaSonucSayisiStr);
+
+        softAssert.assertTrue(sonucSayisi>1000);
+
+          softAssert.assertAll();
+          Driver.closeDriver();
+    }
 
 }
