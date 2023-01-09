@@ -1,6 +1,8 @@
 package Test_Runs.February06_23;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.QualitydemyPage;
 import utilities.Driver;
 
 public class Test_03 {
@@ -16,8 +18,14 @@ public class Test_03 {
     public void test01(){
 
         Driver.getDriver().get("https://www.qualitydemy.com/");
+        QualitydemyPage qualitydemyPage= new QualitydemyPage();
+        qualitydemyPage.ilkLoginLinki.click();
+        qualitydemyPage.kullaniciEmailKutusu.sendKeys("ornek@login.com");
+        qualitydemyPage.passwordKutusu.sendKeys("123456");
+        qualitydemyPage.loginButonu.click();
+        Assert.assertTrue(qualitydemyPage.basariliGirisCoursesLinki.isDisplayed());
 
-
+        Driver.closeDriver();
 
     }
 
