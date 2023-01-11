@@ -1,22 +1,31 @@
-package Test_Runs.February07_23;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import pages.QualitydemyPage;
+import utilities.Driver;
 
 public class Test_01 {
 
-    //1. "http://zero.webappsecurity.com/" Adresine gidin
-    // 2. Sign in butonuna basin
-    // 3. Login kutusuna "username" yazin
-    // 4. Password kutusuna "password" yazin
-    // 5. Sign in tusuna basin
-    // 6. Online banking menusu icinde Pay Bills sayfasina gidin
-    // 7. "Purchase Foreign Currency" tusuna basin
-    // 8. "Currency" drop down menusunden Eurozone'u secin
-    // 9. soft assert kullanarak "Eurozone (euro)" secildigini test edin
-    // 10. soft assert kullanarak DropDown listesinin su secenekleri oldugunu test edin
-    // "Select One", "Australia (dollar)", "Canada (dollar)","Switzerland (franc)","China (yuan)",
-    // "Denmark (krone)","Eurozone (euro)","Great Britain (pound)","Hong Kong (dollar)","Japan (yen)",
-    // "Mexico (peso)","Norway (krone)","New Zealand (dollar)","Sweden (krona)","Singapore (dollar)","Thailand (baht)"
+    //1- https://www.qualitydemy.com/ anasayfasina gidin
+    //2- login linkine basin
+    // 3- Kullanici email’i olarak valid email girin
+    // 4- Kullanici sifresi olarak valid sifre girin
+    // 5- Login butonuna basarak login olun
+    // 6- Basarili olarak giris yapilabildigini test ediniz
 
+    @Test
+    public void test01(){
 
+        Driver.getDriver().get("https://www.qualitydemy.com/");
+        QualitydemyPage qualitydemyPage= new QualitydemyPage();
+        qualitydemyPage.ilkLoginLinki.click();
+        qualitydemyPage.kullaniciEmailKutusu.sendKeys("ornek@login.com");
+        qualitydemyPage.passwordKutusu.sendKeys("123456");
+        qualitydemyPage.loginButonu.click();
+        Assert.assertTrue(qualitydemyPage.basariliGirisCoursesLinki.isDisplayed());
+
+        Driver.closeDriver();
+
+    }
 
 }
  
